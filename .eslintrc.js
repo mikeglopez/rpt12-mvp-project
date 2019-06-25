@@ -5,6 +5,7 @@ module.exports = {
     'comma-dangle': 'off',
     'no-plusplus': 'off',
     'no-underscore-dangle': 'off',
-    'max-len': 'off'
+    'max-len': 'off',
+    'no-undef': 'off'
   }
 };
