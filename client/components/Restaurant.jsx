@@ -9,7 +9,7 @@ class Restaurant extends React.Component {
   render() {
     return (
       <div>
-        Longitude: {this.props.long} | Latitude: {this.props.lat}
+        Latitude: {this.props.lat} | Longitude: {this.props.long}
       </div>
     );
   }

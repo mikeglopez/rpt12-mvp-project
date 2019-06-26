@@ -11,9 +11,9 @@ class List extends React.Component {
     return (
       <div>
         {/* Placeholder restaurant components */}
-        <Restaurant long={this.props.long} lat={this.props.lat} />
-        <Restaurant long={this.props.long} lat={this.props.lat} />
-        <Restaurant long={this.props.long} lat={this.props.lat} />
+        <Restaurant lat={this.props.lat} long={this.props.long} />
+        <Restaurant lat={this.props.lat} long={this.props.long} />
+        <Restaurant lat={this.props.lat} long={this.props.long} />
       </div>
     );
   }

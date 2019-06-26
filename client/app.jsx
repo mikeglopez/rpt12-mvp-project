@@ -25,7 +25,6 @@ class App extends React.Component {
       method: 'POST',
       url: '/geolocation',
       success: (data) => {
-        console.log(typeof data.lat);
         this.setState({
           latitude: data.lat,
           longitude: data.lng
@@ -39,7 +38,7 @@ class App extends React.Component {
       <div>
         <Title>Tacomatic</Title>
         <button type="button" onClick={this.getLocation}>Get Location</button>
-        <List long={this.state.longitude} lat={this.state.latitude} />
+        <List lat={this.state.latitude} long={this.state.longitude} />
       </div>
     );
   }
