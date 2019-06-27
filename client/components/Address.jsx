@@ -8,23 +8,23 @@ class Address extends React.Component {
     };
 
     this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleClick = this.handleClick.bind(this);
   }
 
   handleChange(event) {
     this.setState({ address: event.target.value });
   }
 
-  handleSubmit(event) {
+  handleClick(event) {
     event.preventDefault();
-    this.props.onSubmit(this.state.address);
+    this.props.onClick(this.state.address);
   }
 
   render() {
     return (
-      <form onSubmit={this.handleSubmit}>
+      <form onClick={this.handleClick}>
         <input type="text" placeholder="Or enter your address" value={this.state.address} onChange={this.handleChange} />
-        <input type="submit" value="Find Tacos" />
+        <input type="button" value="Find Tacos" />
       </form>
     );
   }

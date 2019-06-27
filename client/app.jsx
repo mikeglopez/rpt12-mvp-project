@@ -5,9 +5,57 @@ import styled from 'styled-components';
 import List from './components/List.jsx';
 import Address from './components/Address.jsx';
 
+const Wrapper = styled.div`
+  color: #333333;
+  font-family: Verdana, Arial, sans-serif;
+
+  a:link, a:visited {
+    color: #333333;
+    text-decoration: none;
+  }
+
+  a:hover, a:active {
+    color: #666666;
+  }
+
+  button, input[type=button] {
+    background-color: #1F7A37;
+    border: none;
+    border-radius: 3px;
+    color: #FFFFFF;
+    padding: 15px 32px;
+    text-align: center;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+  }
+
+  input {
+    border-radius: 3px;
+    padding: 13px 30px;
+    font-size: 16px;
+    margin: 4px 2px;
+  }
+`;
+
 const Title = styled.h1`
-  text-align: center;
+  @import url('https://fonts.googleapis.com/css?family=Permanent+Marker&display=swap');
+  color: #155125;
+  font-family: 'Permanent Marker', cursive;
   font-weight: 900;
+  font-size: 4em;
+  text-align: center;
+`;
+
+const Inputs = styled.div`
+  width: 100%;
+  text-align: center;
+`;
+
+const Input = styled.div`
+  display: inline-block;
+  padding: 0 10px;
 `;
 
 class App extends React.Component {
@@ -63,12 +111,19 @@ class App extends React.Component {
 
   render() {
     return (
-      <div>
+      <Wrapper>
         <Title>Tacomatic</Title>
-        <button type="button" onClick={this.getLocation}>Share Location</button> <Address onSubmit={this.getAddress} />
+        <Inputs>
+          <Input>
+            <button type="button" onClick={this.getLocation}>Share Location</button>
+          </Input>
+          <Input>
+            <Address onClick={this.getAddress} />
+          </Input>
+        </Inputs>
         <br />
         <List location={this.state.location} restaurants={this.state.restaurants} />
-      </div>
+      </Wrapper>
     );
   }
 }
