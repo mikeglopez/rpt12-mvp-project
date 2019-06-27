@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import $ from 'jquery';
 import styled from 'styled-components';
 import List from './components/List.jsx';
+import Address from './components/Address.jsx';
 
 const Title = styled.h1`
   text-align: center;
@@ -18,6 +19,7 @@ class App extends React.Component {
     };
 
     this.getLocation = this.getLocation.bind(this);
+    this.getAddress = this.getAddress.bind(this);
     this.search = this.search.bind(this);
   }
 
@@ -37,6 +39,15 @@ class App extends React.Component {
     });
   }
 
+  getAddress(address) {
+    new Promise((resolve) => {
+      resolve(this.setState({ location: address }));
+    })
+      .then(() => {
+        this.search();
+      });
+  }
+
   search() {
     $.ajax({
       method: 'GET',
@@ -54,8 +65,9 @@ class App extends React.Component {
     return (
       <div>
         <Title>Tacomatic</Title>
-        <button type="button" onClick={this.getLocation}>Get Location</button>
-        <List restaurants={this.state.restaurants} />
+        <button type="button" onClick={this.getLocation}>Share Location</button> <Address onSubmit={this.getAddress} />
+        <br />
+        <List location={this.state.location} restaurants={this.state.restaurants} />
       </div>
     );
   }

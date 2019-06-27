@@ -22,7 +22,8 @@ app.get('/search', (req, res) => {
     .then((restaurants) => {
       const sorted = restaurants.data.businesses.sort((a, b) => parseFloat(a.distance) - parseFloat(b.distance));
       res.status(200).send(sorted);
-    });
+    })
+    .catch(err => console.log(err));
 });
 
 app.listen(port, () => console.log(`Listening on port ${port}.`));
