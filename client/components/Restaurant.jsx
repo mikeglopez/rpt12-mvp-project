@@ -9,7 +9,7 @@ class Restaurant extends React.Component {
   render() {
     return (
       <div>
-        Latitude: {this.props.lat} | Longitude: {this.props.long}
+        {this.props.restaurant.name} - Distance: {(this.props.restaurant.distance / 1609.344).toFixed(2)} miles away
       </div>
     );
   }

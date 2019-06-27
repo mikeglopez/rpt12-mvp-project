@@ -11,9 +11,11 @@ class List extends React.Component {
     return (
       <div>
         {/* Placeholder restaurant components */}
-        <Restaurant lat={this.props.lat} long={this.props.long} />
-        <Restaurant lat={this.props.lat} long={this.props.long} />
-        <Restaurant lat={this.props.lat} long={this.props.long} />
+        {console.log(this.props.restaurants)}
+        {/* <Restaurant restaurants={this.props.restaurants} />
+        <Restaurant restaurants={this.props.restaurants} />
+        <Restaurant restaurants={this.props.restaurants} /> */}
+        {this.props.restaurants.map((restaurant, id) => <Restaurant key={id} restaurant={restaurant} />)}
       </div>
     );
   }

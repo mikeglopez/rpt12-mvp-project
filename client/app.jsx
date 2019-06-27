@@ -13,11 +13,12 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      latitude: 0,
-      longitude: 0
+      location: '',
+      restaurants: []
     };
 
     this.getLocation = this.getLocation.bind(this);
+    this.search = this.search.bind(this);
   }
 
   getLocation() {
@@ -26,8 +27,24 @@ class App extends React.Component {
       url: '/geolocation',
       success: (data) => {
         this.setState({
-          latitude: data.lat,
-          longitude: data.lng
+          location: {
+            latitude: data.lat,
+            longitude: data.lng
+          }
+        });
+        this.search();
+      }
+    });
+  }
+
+  search() {
+    $.ajax({
+      method: 'GET',
+      url: '/search',
+      data: { location: this.state.location },
+      success: (list) => {
+        this.setState({
+          restaurants: list
         });
       }
     });
@@ -38,7 +55,7 @@ class App extends React.Component {
       <div>
         <Title>Tacomatic</Title>
         <button type="button" onClick={this.getLocation}>Get Location</button>
-        <List lat={this.state.latitude} long={this.state.longitude} />
+        <List restaurants={this.state.restaurants} />
       </div>
     );
   }

@@ -10,6 +10,7 @@ module.exports = {
     'import/extensions': 'off',
     'react/destructuring-assignment': 'off',
     'react/jsx-one-expression-per-line': 'off',
-    'react/prop-types': 'off'
+    'react/prop-types': 'off',
+    'react/no-array-index-key': 'off'
   }
 };
