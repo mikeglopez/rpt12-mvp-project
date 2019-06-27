@@ -1,22 +1,24 @@
 import React from 'react';
+import styled from 'styled-components';
 import Restaurant from './Restaurant.jsx';
 
-class List extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
+const Wrapper = styled.div`
+  display: inline-block;
+  margin: 0 auto;
+  padding-left: 30px;
+`;
 
-  render() {
-    return (
-      <div>
-        {/* Placeholder restaurant components */}
-        <Restaurant lat={this.props.lat} long={this.props.long} />
-        <Restaurant lat={this.props.lat} long={this.props.long} />
-        <Restaurant lat={this.props.lat} long={this.props.long} />
-      </div>
-    );
-  }
-}
+const Subtitle = styled.h2`
+  @import url('https://fonts.googleapis.com/css?family=Permanent+Marker&display=swap');
+  font-family: 'Permanent Marker', cursive;
+  text-align: center;
+`;
+
+const List = props => (
+  <Wrapper>
+    <Subtitle>Tacos Near {(typeof props.location === 'string' && props.location.length) ? props.location : 'You'}</Subtitle>
+    {props.restaurants.map((restaurant, id) => <Restaurant key={id} restaurant={restaurant} />)}
+  </Wrapper>
+);
 
 export default List;
