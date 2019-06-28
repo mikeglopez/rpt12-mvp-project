@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import $ from 'jquery';
 import styled from 'styled-components';
 import List from './components/List.jsx';
+import Map from './components/Map.jsx';
 import Address from './components/Address.jsx';
 
 const Wrapper = styled.div`
@@ -58,17 +59,23 @@ const Input = styled.div`
   padding: 0 10px;
 `;
 
+const Outputs = styled.div`
+  text-align: center;
+`;
+
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       location: '',
+      address: '',
       restaurants: []
     };
 
     this.getLocation = this.getLocation.bind(this);
     this.getAddress = this.getAddress.bind(this);
     this.search = this.search.bind(this);
+    this.geocode = this.getGeocode.bind(this);
   }
 
   getLocation() {
@@ -77,6 +84,7 @@ class App extends React.Component {
       url: '/geolocation',
       success: (data) => {
         this.setState({
+          address: '',
           location: {
             latitude: data.lat,
             longitude: data.lng
@@ -89,11 +97,34 @@ class App extends React.Component {
 
   getAddress(address) {
     new Promise((resolve) => {
-      resolve(this.setState({ location: address }));
+      resolve(this.setState({
+        location: address,
+        address
+      }));
     })
       .then(() => {
         this.search();
+        this.getGeocode();
       });
+  }
+
+  getGeocode() {
+    $.ajax({
+      method: 'GET',
+      url: '/geocode',
+      data: { location: this.state.location },
+      success: (geocode) => {
+        console.log('THIS IS THE SUCCESS IN GEOCODE:', geocode);
+        if (this.state.address.length) {
+          this.setState({
+            location: {
+              latitude: geocode.lat,
+              longitude: geocode.lng
+            }
+          });
+        }
+      }
+    });
   }
 
   search() {
@@ -122,7 +153,10 @@ class App extends React.Component {
           </Input>
         </Inputs>
         <br />
-        <List location={this.state.location} restaurants={this.state.restaurants} />
+        <Outputs>
+          <List address={this.state.address} location={this.state.location} restaurants={this.state.restaurants} />
+          <Map location={this.state.location} restaurants={this.state.restaurants} />
+        </Outputs>
       </Wrapper>
     );
   }

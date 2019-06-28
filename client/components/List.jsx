@@ -6,6 +6,7 @@ const Wrapper = styled.div`
   display: inline-block;
   margin: 0 auto;
   padding-left: 30px;
+  text-align: left;
 `;
 
 const Subtitle = styled.h2`
@@ -16,7 +17,7 @@ const Subtitle = styled.h2`
 
 const List = props => (
   <Wrapper>
-    <Subtitle>Tacos Near {(typeof props.location === 'string' && props.location.length) ? props.location : 'You'}</Subtitle>
+    <Subtitle>Tacos Near {(props.address.length) ? props.address : 'You'}</Subtitle>
     {props.restaurants.map((restaurant, id) => <Restaurant key={id} restaurant={restaurant} />)}
   </Wrapper>
 );
