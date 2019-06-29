@@ -2,9 +2,10 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import $ from 'jquery';
 import styled from 'styled-components';
+import Address from './components/Address.jsx';
 import List from './components/List.jsx';
 import MapContainer from './components/MapContainer.jsx';
-import Address from './components/Address.jsx';
+import Links from './components/Links.jsx';
 
 const Wrapper = styled.div`
   color: #333333;
@@ -18,6 +19,20 @@ const Wrapper = styled.div`
   a:hover, a:active {
     color: #666666;
   }
+`;
+
+const Title = styled.h1`
+  @import url('https://fonts.googleapis.com/css?family=Permanent+Marker&display=swap');
+  color: #155125;
+  font-family: 'Permanent Marker', cursive;
+  font-weight: 900;
+  font-size: 4em;
+  text-align: center;
+`;
+
+const Inputs = styled.div`
+  width: 100%;
+  text-align: center;
 
   button, input[type=button] {
     background-color: #1F7A37;
@@ -38,20 +53,6 @@ const Wrapper = styled.div`
     font-size: 16px;
     margin: 4px 2px;
   }
-`;
-
-const Title = styled.h1`
-  @import url('https://fonts.googleapis.com/css?family=Permanent+Marker&display=swap');
-  color: #155125;
-  font-family: 'Permanent Marker', cursive;
-  font-weight: 900;
-  font-size: 4em;
-  text-align: center;
-`;
-
-const Inputs = styled.div`
-  width: 100%;
-  text-align: center;
 `;
 
 const Input = styled.div`
@@ -80,39 +81,31 @@ const Right = styled.div`
   width: 40%
 `;
 
+const Userbar = styled.div`
+  height: 50px;
+  width: 100%;
+  margin: 20px;
+  display: block;
+`;
+
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      page: 'public',
       location: {
         latitude: 41.874,
         longitude: -87.649
       },
       address: '',
-      restaurants: []
+      restaurants: [],
+      isLoggedIn: false
     };
 
     this.getLocation = this.getLocation.bind(this);
     this.getAddress = this.getAddress.bind(this);
     this.search = this.search.bind(this);
     this.geocode = this.getGeocode.bind(this);
-  }
-
-  getLocation() {
-    $.ajax({
-      method: 'POST',
-      url: '/geolocation',
-      success: (data) => {
-        this.setState({
-          address: '',
-          location: {
-            latitude: data.lat,
-            longitude: data.lng
-          }
-        });
-        this.search();
-      }
-    });
   }
 
   getAddress(address) {
@@ -146,6 +139,23 @@ class App extends React.Component {
     });
   }
 
+  getLocation() {
+    $.ajax({
+      method: 'POST',
+      url: '/geolocation',
+      success: (data) => {
+        this.setState({
+          address: '',
+          location: {
+            latitude: data.lat,
+            longitude: data.lng
+          }
+        });
+        this.search();
+      }
+    });
+  }
+
   search() {
     $.ajax({
       method: 'GET',
@@ -159,9 +169,35 @@ class App extends React.Component {
     });
   }
 
+  signup() {
+    this.setState({
+      page: 'signup'
+    });
+    $.ajax({
+      method: 'GET',
+      url: '/signup',
+      success: (data) => {
+        console.log('DATA', data);
+        this.setState({
+          page: 'loggedin',
+          isLoggedIn: true
+        });
+        $.ajax({
+          method: 'GET',
+          url: '/',
+        });
+      }
+    });
+  }
+
   render() {
+    let output;
+
     return (
       <Wrapper>
+        <Userbar>
+          <Links isLoggedIn={this.state.isLoggedIn} />
+        </Userbar>
         <Title>Tacomatic</Title>
         <Inputs>
           <Input>

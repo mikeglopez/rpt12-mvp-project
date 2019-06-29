@@ -1,17 +1,19 @@
 const express = require('express');
-const getLocation = require('../helpers/getLocation.js');
-const getRestaurants = require('../helpers/getRestaurants.js');
-const getGeocode = require('../helpers/getGeocode.js');
+const bodyParser = require('body-parser');
+const helpers = require('../helpers/helpers.js');
+const db = require('../database/index.js');
 
 const app = express();
 const port = process.env.PORT || 3000;
 const googleToken = process.env.GOOGLEMAPS_API;
 const yelpToken = process.env.YELP_API;
 
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 app.use(express.static('public'));
 
 app.post('/geolocation', (req, res) => {
-  getLocation(googleToken)
+  helpers.getLocation(googleToken)
     .then((location) => {
       res.status(200).send(location.data.location);
     })
@@ -20,7 +22,7 @@ app.post('/geolocation', (req, res) => {
 
 app.get('/search', (req, res) => {
   const location = req.query;
-  getRestaurants(yelpToken, location)
+  helpers.getRestaurants(yelpToken, location)
     .then((restaurants) => {
       const sorted = restaurants.data.businesses.sort((a, b) => parseFloat(a.distance) - parseFloat(b.distance));
       res.status(200).send(sorted);
@@ -30,11 +32,22 @@ app.get('/search', (req, res) => {
 
 app.get('/geocode', (req, res) => {
   const location = req.query;
-  getGeocode(googleToken, location)
+  helpers.getGeocode(googleToken, location)
     .then((loc) => {
       res.status(200).send(loc.data.results[0].geometry.location);
     })
     .catch(err => console.log('/geocode:', err.response.statusText));
+});
+
+app.post('/signup', (req, res) => {
+  const userdata = req.body;
+  db.signup(userdata).exec((err, user) => {
+    if (err) {
+      res.status(400).send(err);
+    } else {
+      res.status(201).send(user);
+    }
+  });
 });
 
 app.listen(port, () => console.log(`Listening on port ${port}.`));
