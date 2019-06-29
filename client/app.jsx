@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import $ from 'jquery';
 import styled from 'styled-components';
 import List from './components/List.jsx';
-import Map from './components/Map.jsx';
+import MapContainer from './components/MapContainer.jsx';
 import Address from './components/Address.jsx';
 
 const Wrapper = styled.div`
@@ -60,7 +60,24 @@ const Input = styled.div`
 `;
 
 const Outputs = styled.div`
+  min-width: max-content;
   text-align: center;
+
+  &::after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+`;
+
+const Left = styled.div`
+  float: left;
+  width: 60%
+`;
+
+const Right = styled.div`
+  float: right;
+  width: 40%
 `;
 
 class App extends React.Component {
@@ -114,7 +131,6 @@ class App extends React.Component {
       url: '/geocode',
       data: { location: this.state.location },
       success: (geocode) => {
-        console.log('THIS IS THE SUCCESS IN GEOCODE:', geocode);
         if (this.state.address.length) {
           this.setState({
             location: {
@@ -154,8 +170,12 @@ class App extends React.Component {
         </Inputs>
         <br />
         <Outputs>
-          <List address={this.state.address} location={this.state.location} restaurants={this.state.restaurants} />
-          <Map location={this.state.location} restaurants={this.state.restaurants} />
+          <Left>
+            <List address={this.state.address} location={this.state.location} restaurants={this.state.restaurants} />
+          </Left>
+          <Right>
+            <MapContainer location={this.state.location} restaurants={this.state.restaurants} />
+          </Right>
         </Outputs>
       </Wrapper>
     );
