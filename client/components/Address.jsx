@@ -22,9 +22,9 @@ class Address extends React.Component {
 
   render() {
     return (
-      <form onClick={this.handleClick}>
+      <form>
         <input type="text" placeholder="Or enter your address" value={this.state.address} onChange={this.handleChange} />
-        <input type="button" value="Find Tacos" />
+        <input type="button" value="Find Tacos" onClick={this.handleClick} />
       </form>
     );
   }

@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import $ from 'jquery';
 import styled from 'styled-components';
 import List from './components/List.jsx';
+import MapContainer from './components/MapContainer.jsx';
 import Address from './components/Address.jsx';
 
 const Wrapper = styled.div`
@@ -58,17 +59,43 @@ const Input = styled.div`
   padding: 0 10px;
 `;
 
+const Outputs = styled.div`
+  min-width: max-content;
+  text-align: center;
+
+  &::after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+`;
+
+const Left = styled.div`
+  float: left;
+  width: 60%
+`;
+
+const Right = styled.div`
+  float: right;
+  width: 40%
+`;
+
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      location: '',
+      location: {
+        latitude: 41.874,
+        longitude: -87.649
+      },
+      address: '',
       restaurants: []
     };
 
     this.getLocation = this.getLocation.bind(this);
     this.getAddress = this.getAddress.bind(this);
     this.search = this.search.bind(this);
+    this.geocode = this.getGeocode.bind(this);
   }
 
   getLocation() {
@@ -77,6 +104,7 @@ class App extends React.Component {
       url: '/geolocation',
       success: (data) => {
         this.setState({
+          address: '',
           location: {
             latitude: data.lat,
             longitude: data.lng
@@ -89,11 +117,33 @@ class App extends React.Component {
 
   getAddress(address) {
     new Promise((resolve) => {
-      resolve(this.setState({ location: address }));
+      resolve(this.setState({
+        location: address,
+        address
+      }));
     })
       .then(() => {
         this.search();
+        this.getGeocode();
       });
+  }
+
+  getGeocode() {
+    $.ajax({
+      method: 'GET',
+      url: '/geocode',
+      data: { location: this.state.location },
+      success: (geocode) => {
+        if (this.state.address.length) {
+          this.setState({
+            location: {
+              latitude: geocode.lat,
+              longitude: geocode.lng
+            }
+          });
+        }
+      }
+    });
   }
 
   search() {
@@ -122,7 +172,14 @@ class App extends React.Component {
           </Input>
         </Inputs>
         <br />
-        <List location={this.state.location} restaurants={this.state.restaurants} />
+        <Outputs>
+          <Left>
+            <List address={this.state.address} location={this.state.location} restaurants={this.state.restaurants} />
+          </Left>
+          <Right>
+            <MapContainer location={this.state.location} restaurants={this.state.restaurants} />
+          </Right>
+        </Outputs>
       </Wrapper>
     );
   }
