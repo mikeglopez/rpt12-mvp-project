@@ -84,7 +84,10 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      location: '',
+      location: {
+        latitude: 41.874,
+        longitude: -87.649
+      },
       address: '',
       restaurants: []
     };
