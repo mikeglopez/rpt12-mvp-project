@@ -6,6 +6,7 @@ import Address from './components/Address.jsx';
 import List from './components/List.jsx';
 import MapContainer from './components/MapContainer.jsx';
 import Links from './components/Links.jsx';
+import Signup from './components/Signup.jsx';
 
 const Wrapper = styled.div`
   color: #333333;
@@ -99,13 +100,20 @@ class App extends React.Component {
       },
       address: '',
       restaurants: [],
-      isLoggedIn: false
+      isLoggedIn: false,
+      userdata: {
+        username: '',
+        password: '',
+        favorites: []
+      }
     };
 
     this.getLocation = this.getLocation.bind(this);
     this.getAddress = this.getAddress.bind(this);
     this.search = this.search.bind(this);
     this.geocode = this.getGeocode.bind(this);
+    this.signup = this.signup.bind(this);
+    this.register = this.register.bind(this);
   }
 
   getAddress(address) {
@@ -170,52 +178,85 @@ class App extends React.Component {
   }
 
   signup() {
-    this.setState({
-      page: 'signup'
-    });
     $.ajax({
       method: 'GET',
       url: '/signup',
-      success: (data) => {
-        console.log('DATA', data);
+      success: () => {
+        // this is the sign up page
         this.setState({
-          page: 'loggedin',
-          isLoggedIn: true
-        });
-        $.ajax({
-          method: 'GET',
-          url: '/',
+          page: 'signup'
         });
       }
     });
   }
 
-  render() {
-    let output;
+  register(userdata) {
+    $.ajax({
+      method: 'POST',
+      url: '/private',
+      data: {
+        username: userdata.username,
+        password: userdata.password,
+        favorites: userdata.favorites
+      },
+      success: (data) => {
+        // this is the private/logged in page
+        console.log(`Registered ${data.username}!`);
+        this.setState({
+          page: 'private',
+          isLoggedIn: true
+        });
+      },
+      error: (err) => {
+        if (err.responseJSON.code === 11000) {
+          alert(`The username ${userdata.username} has already been taken. Please select another username.`);
+        } else {
+          console.log(err);
+        }
+      }
+    });
+  }
 
+  render() {
+    let Output;
+
+    switch (this.state.page) {
+      case 'signup':
+        Output = () => (
+          <Signup register={this.register} />
+        );
+        break;
+
+      default:
+        Output = () => (
+          <div>
+            <Inputs>
+              <Input>
+                <button type="button" onClick={this.getLocation}>Share Location</button>
+              </Input>
+              <Input>
+                <Address onClick={this.getAddress} />
+              </Input>
+            </Inputs>
+            <br />
+            <Outputs>
+              <Left>
+                <List address={this.state.address} location={this.state.location} restaurants={this.state.restaurants} />
+              </Left>
+              <Right>
+                <MapContainer location={this.state.location} restaurants={this.state.restaurants} />
+              </Right>
+            </Outputs>
+          </div>
+        );
+    }
     return (
       <Wrapper>
         <Userbar>
-          <Links isLoggedIn={this.state.isLoggedIn} />
+          <Links page={this.page} signup={this.signup} isLoggedIn={this.state.isLoggedIn} />
         </Userbar>
         <Title>Tacomatic</Title>
-        <Inputs>
-          <Input>
-            <button type="button" onClick={this.getLocation}>Share Location</button>
-          </Input>
-          <Input>
-            <Address onClick={this.getAddress} />
-          </Input>
-        </Inputs>
-        <br />
-        <Outputs>
-          <Left>
-            <List address={this.state.address} location={this.state.location} restaurants={this.state.restaurants} />
-          </Left>
-          <Right>
-            <MapContainer location={this.state.location} restaurants={this.state.restaurants} />
-          </Right>
-        </Outputs>
+        {<Output />}
       </Wrapper>
     );
   }

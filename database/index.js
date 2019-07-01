@@ -15,7 +15,11 @@ const User = mongoose.model('User', userSchema);
 
 const signup = (userdata) => {
   const record = new User(userdata);
-  record.save();
+  return record.save()
+    .then(user => user)
+    .catch((err) => {
+      throw err;
+    });
 };
 
 const favorite = (restaurant) => {

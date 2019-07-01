@@ -39,15 +39,19 @@ app.get('/geocode', (req, res) => {
     .catch(err => console.log('/geocode:', err.response.statusText));
 });
 
-app.post('/signup', (req, res) => {
+app.get('/signup', (req, res) => {
+  res.status(200).send('OK');
+});
+
+app.post('/private', (req, res) => {
   const userdata = req.body;
-  db.signup(userdata).exec((err, user) => {
-    if (err) {
+  db.signup(userdata)
+    .then((data) => {
+      res.status(201).send(data);
+    })
+    .catch((err) => {
       res.status(400).send(err);
-    } else {
-      res.status(201).send(user);
-    }
-  });
+    });
 });
 
 app.listen(port, () => console.log(`Listening on port ${port}.`));

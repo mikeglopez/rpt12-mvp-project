@@ -15,35 +15,43 @@ const Link = styled.div`
   }
 `;
 
-const Loggedout = props => (
-  <div>
-    <Link onClick={props.onClick}>Sign Up</Link>
-    <Link onClick={props.onClick}>Login</Link>
-  </div>
-);
-
-const Loggedin = props => (
-  <div>
-    <Link onClick={props.onClick}>Logout</Link>
-  </div>
-);
-
 class Links extends React.Component {
   constructor(props) {
     super(props);
     this.state = {};
+    this.loggedout = this.loggedout.bind(this);
+    this.loggedin = this.loggedin.bind(this);
+  }
+
+  loggedout() {
+    return (
+      <div>
+        <Link onClick={this.props.signup}>Sign Up</Link>
+        <Link onClick={this.props.onClick}>Login</Link>
+      </div>
+    );
+  }
+
+  loggedin() {
+    return (
+      <div>
+        <Link onClick={this.props.onClick}>Login</Link>
+      </div>
+    );
   }
 
   render() {
     let bar;
 
     if (this.props.isLoggedIn) {
-      button = <Loggedin onClick={this.handleLogoutClick}
+      bar = this.loggedin();
+    } else {
+      bar = this.loggedout();
     }
+
     return (
       <div>
-        <Link>{this.props.isLoggedIn ? '' : 'Sign Up'}</Link>
-        <Link>{this.props.isLoggedIn ? 'Log Out' : 'Log In'}</Link>
+        {bar}
       </div>
     );
   }
