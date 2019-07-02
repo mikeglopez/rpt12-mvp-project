@@ -35,7 +35,7 @@ class Links extends React.Component {
   loggedin() {
     return (
       <div>
-        <Link onClick={this.props.onClick}>Login</Link>
+        <Link onClick={this.props.logout}>Logout</Link>
       </div>
     );
   }

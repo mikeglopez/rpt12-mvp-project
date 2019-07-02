@@ -54,4 +54,8 @@ app.post('/private', (req, res) => {
     });
 });
 
+app.get('/logout', (req, res) => {
+  res.status(200).send('OK');
+});
+
 app.listen(port, () => console.log(`Listening on port ${port}.`));

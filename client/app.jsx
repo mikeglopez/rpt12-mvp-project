@@ -101,9 +101,8 @@ class App extends React.Component {
       address: '',
       restaurants: [],
       isLoggedIn: false,
-      userdata: {
+      user: {
         username: '',
-        password: '',
         favorites: []
       }
     };
@@ -114,6 +113,7 @@ class App extends React.Component {
     this.geocode = this.getGeocode.bind(this);
     this.signup = this.signup.bind(this);
     this.register = this.register.bind(this);
+    this.logout = this.logout.bind(this);
   }
 
   getAddress(address) {
@@ -204,7 +204,11 @@ class App extends React.Component {
         console.log(`Registered ${data.username}!`);
         this.setState({
           page: 'private',
-          isLoggedIn: true
+          isLoggedIn: true,
+          user: {
+            username: userdata.username,
+            favorites: userdata.favorites
+          }
         });
       },
       error: (err) => {
@@ -213,6 +217,19 @@ class App extends React.Component {
         } else {
           console.log(err);
         }
+      }
+    });
+  }
+
+  logout() {
+    $.ajax({
+      method: 'GET',
+      url: '/logout',
+      success: () => {
+        this.setState({
+          page: 'public',
+          isLoggedIn: false
+        });
       }
     });
   }
@@ -253,7 +270,7 @@ class App extends React.Component {
     return (
       <Wrapper>
         <Userbar>
-          <Links page={this.page} signup={this.signup} isLoggedIn={this.state.isLoggedIn} />
+          <Links page={this.page} signup={this.signup} logout={this.logout} isLoggedIn={this.state.isLoggedIn} />
         </Userbar>
         <Title>Tacomatic</Title>
         {<Output />}
