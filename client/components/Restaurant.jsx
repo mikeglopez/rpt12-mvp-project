@@ -5,8 +5,8 @@ import RestaurantInfo from './RestaurantInfo.jsx';
 const Wrapper = styled.div`
   border-top: 1px solid #E6E6E6;
   border-bottom: 1px solid #E6E6E6;
-  height: 115px;
-  padding: 10px 0 0 10px;
+  min-height: 115px;
+  padding: 10px 0 10px 10px;
 `;
 
 const Picture = styled.img`
@@ -14,6 +14,11 @@ const Picture = styled.img`
   display: inline-block;
   height: 100px;
   width: 100px;
+
+  @media only screen and (max-width: 768px) {
+    height: 60px;
+    width: 60px;
+  }
 `;
 
 const Info = styled.div`

@@ -5,6 +5,7 @@ import phoneFormatter from 'phone-formatter';
 
 const Wrapper = styled.div`
   padding-left: 10px;
+  max-width: 80%;
 `;
 
 const Title = styled.a`
@@ -12,6 +13,7 @@ const Title = styled.a`
   font-size: 1.17em;
   font-weight: bolder;
   margin: auto;
+  overflow-wrap: break-word;
 `;
 
 const RestaurantInfo = props => (
