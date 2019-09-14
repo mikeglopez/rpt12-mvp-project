@@ -8,7 +8,8 @@
     "start-dev": "nodemon server/server.js",
     "build-dev": "webpack -d --watch",
     "start": "node server/server.js",
-    "build": "webpack -p"
+    "build": "webpack -p",
+    "postinstall": "webpack -p"
   },
   "repository": {
     "type": "git",
@@ -48,5 +49,8 @@
     "eslint-plugin-jsx-a11y": "^6.2.1",
     "eslint-plugin-react": "^7.14.2",
     "nodemon": "^1.19.1"
+  },
+  "engines": {
+    "node": "10.15.3"
   }
 }
