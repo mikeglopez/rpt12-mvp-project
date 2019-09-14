@@ -4,7 +4,8 @@ import GoogleMapReact from 'google-map-react';
 import styled from 'styled-components';
 import phoneFormatter from 'phone-formatter';
 import Marker from './Marker.jsx';
-import token from '../../config.js';
+
+const token = process.env.TOKEN;
 
 const Wrapper = styled.div`
   height: 400px;
