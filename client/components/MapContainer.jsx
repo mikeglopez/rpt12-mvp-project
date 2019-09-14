@@ -8,8 +8,12 @@ import token from '../../config.js';
 
 const Wrapper = styled.div`
   height: 400px;
-  width: 500px;
+  width: 100%;
   margin-top: 80px;
+
+@media only screen and (max-width: 1024px) {
+  height: 300px;
+}
 `;
 
 const MapContainer = props => (

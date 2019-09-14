@@ -9,6 +9,7 @@ import Address from './components/Address.jsx';
 const Wrapper = styled.div`
   color: #333333;
   font-family: Verdana, Arial, sans-serif;
+  max-width: 100%;
 
   a:link, a:visited {
     color: #333333;
@@ -62,22 +63,36 @@ const Input = styled.div`
 const Outputs = styled.div`
   min-width: max-content;
   text-align: center;
+  margin: auto;
 
   &::after {
     content: "";
     display: table;
     clear: both;
   }
+
+  @media only screen and (max-width: 450px) {
+    font-size: 10px;
+  }
 `;
 
 const Left = styled.div`
   float: left;
-  width: 60%
+  min-width: fit-content;
+  width: 60%;
+
+  @media only screen and (max-width: 900px) {
+    width: 100%;
+  }
 `;
 
 const Right = styled.div`
   float: right;
-  width: 40%
+  width: 40%;
+
+  @media only screen and (max-width: 900px) {
+    display: none;
+  }
 `;
 
 class App extends React.Component {
