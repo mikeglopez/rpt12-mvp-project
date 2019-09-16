@@ -5,8 +5,6 @@ import styled from 'styled-components';
 import phoneFormatter from 'phone-formatter';
 import Marker from './Marker.jsx';
 
-const token = process.env.TOKEN;
-
 const Wrapper = styled.div`
   height: 400px;
   width: 100%;
@@ -21,7 +19,7 @@ const MapContainer = props => (
   <Wrapper>
     <GoogleMapReact
       bootstrapURLKeys={{
-        key: token,
+        key: 'AIzaSyBhzi5ts3oQefyyUDcBF7x3AfticzDt0MA',
         libraries: ['places', 'directions']
       }}
       defaultZoom={13}
