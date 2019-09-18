@@ -114,21 +114,20 @@ class App extends React.Component {
   }
 
   getLocation() {
-    $.ajax({
-      method: 'POST',
-      url: '/geolocation',
-      success: (data) => {
-        console.log('data received from /geolocation is:', data);
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition((position) => {
         this.setState({
           address: '',
           location: {
-            latitude: data.lat,
-            longitude: data.lng
+            latitude: position.coords.latitude,
+            longitude: position.coords.longitude
           }
         });
         this.search();
-      }
-    });
+      });
+    } else {
+      alert('Geolocation is not supported by this browser. Please enter an address.');
+    }
   }
 
   getAddress(address) {

@@ -10,14 +10,6 @@ const yelpToken = process.env.YELP_API;
 
 app.use(express.static('public'));
 
-app.post('/geolocation', (req, res) => {
-  getLocation(googleToken)
-    .then((location) => {
-      res.status(200).send(location.data.location);
-    })
-    .catch(err => console.log('/geolocation:', err.response.statusText));
-});
-
 app.get('/search', (req, res) => {
   const location = req.query;
   getRestaurants(yelpToken, location)

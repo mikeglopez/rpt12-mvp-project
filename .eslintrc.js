@@ -7,6 +7,7 @@ module.exports = {
     'no-underscore-dangle': 'off',
     'max-len': 'off',
     'no-undef': 'off',
+    'no-alert': 'off',
     'import/extensions': 'off',
     'react/destructuring-assignment': 'off',
     'react/jsx-one-expression-per-line': 'off',
