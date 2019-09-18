@@ -118,6 +118,7 @@ class App extends React.Component {
       method: 'POST',
       url: '/geolocation',
       success: (data) => {
+        console.log('data received from /geolocation is:', data);
         this.setState({
           address: '',
           location: {
