@@ -1,7 +1,7 @@
 const axios = require('axios');
 
 const getRestaurants = (key, location) => {
-  let link = 'https://api.yelp.com/v3/businesses/search?term=tacos&sort_by=distance';
+  let link = 'https://api.yelp.com/v3/businesses/search?term=tacos&categories=tacos,mexican&sort_by=distance';
   const loc = location.location;
   if (typeof loc === 'object') {
     link += `&latitude=${loc.latitude}&longitude=${loc.longitude}`;
