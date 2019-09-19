@@ -5,7 +5,6 @@ import phoneFormatter from 'phone-formatter';
 
 const Wrapper = styled.div`
   padding-left: 10px;
-  max-width: 80%;
 `;
 
 const Title = styled.a`

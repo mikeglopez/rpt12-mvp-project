@@ -9,7 +9,7 @@ import Address from './components/Address.jsx';
 const Wrapper = styled.div`
   color: #333333;
   font-family: Verdana, Arial, sans-serif;
-  max-width: 100%;
+  max-width: 90%;
 
   a:link, a:visited {
     color: #333333;
@@ -61,35 +61,18 @@ const Input = styled.div`
 `;
 
 const Outputs = styled.div`
+  display: flex;
+  justify-content: center;
   min-width: max-content;
+  position: relative;
   text-align: center;
-  margin: auto;
-
-  &::after {
-    content: "";
-    display: table;
-    clear: both;
-  }
 
   @media only screen and (max-width: 450px) {
     font-size: 10px;
   }
 `;
 
-const Left = styled.div`
-  float: left;
-  min-width: fit-content;
-  width: 60%;
-
-  @media only screen and (max-width: 900px) {
-    width: 100%;
-  }
-`;
-
-const Right = styled.div`
-  float: right;
-  width: 40%;
-
+const Map = styled.div`
   @media only screen and (max-width: 900px) {
     display: none;
   }
@@ -188,12 +171,12 @@ class App extends React.Component {
         </Inputs>
         <br />
         <Outputs>
-          <Left>
+          <div>
             <List address={this.state.address} location={this.state.location} restaurants={this.state.restaurants} />
-          </Left>
-          <Right>
+          </div>
+          <Map>
             <MapContainer location={this.state.location} restaurants={this.state.restaurants} />
-          </Right>
+          </Map>
         </Outputs>
       </Wrapper>
     );
