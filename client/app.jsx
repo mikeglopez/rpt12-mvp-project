@@ -10,6 +10,7 @@ const Wrapper = styled.div`
   color: #333333;
   font-family: Verdana, Arial, sans-serif;
   max-width: 90%;
+  margin: auto;
 
   a:link, a:visited {
     color: #333333;
@@ -63,9 +64,19 @@ const Input = styled.div`
 const Outputs = styled.div`
   display: flex;
   justify-content: center;
-  min-width: max-content;
+  min-width: 90%;
   position: relative;
   text-align: center;
+
+  > div {
+    padding: 30px;
+  }
+
+  @media only screen and (max-width: 1175px) {
+    > div {
+      padding: 10px;
+    }
+  }
 
   @media only screen and (max-width: 450px) {
     font-size: 10px;
@@ -73,7 +84,7 @@ const Outputs = styled.div`
 `;
 
 const Map = styled.div`
-  @media only screen and (max-width: 900px) {
+  @media only screen and (max-width: 975px) {
     display: none;
   }
 `;

@@ -5,12 +5,7 @@ import Restaurant from './Restaurant.jsx';
 const Wrapper = styled.div`
   display: inline-block;
   margin: 0 auto;
-  padding: 0 30px;
   text-align: left;
-
-  @media only screen and (max-width: 768px) {
-    padding: 0 5px;
-  }
 `;
 
 const Subtitle = styled.h2`
