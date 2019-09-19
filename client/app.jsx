@@ -128,7 +128,7 @@ class App extends React.Component {
     const error = err => console.log('Error getting location:', err);
 
     const options = {
-      timeout: 5000
+      timeout: 10000
     };
 
     if (navigator.geolocation) {
