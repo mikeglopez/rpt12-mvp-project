@@ -114,27 +114,17 @@ class App extends React.Component {
   }
 
   getLocation() {
-    const success = (position) => {
-      this.setState({
-        address: '',
-        location: {
-          latitude: position.coords.latitude,
-          longitude: position.coords.longitude
-        }
-      });
-      this.search();
-    };
-
-    const error = err => console.log('Error getting location:', err);
-
-    const options = {
-      enableHighAccurary: false,
-      timeout: 10000,
-      maximumAge: 0
-    };
-
     if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(success, error, options);
+      navigator.geolocation.getCurrentPosition((position) => {
+        this.setState({
+          address: '',
+          location: {
+            latitude: position.coords.latitude,
+            longitude: position.coords.longitude
+          }
+        });
+        this.search();
+      });
     } else {
       alert('Geolocation is not supported by this browser. Please enter an address.');
     }
