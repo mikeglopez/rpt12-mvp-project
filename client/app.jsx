@@ -79,7 +79,7 @@ const Outputs = styled.div`
   }
 
   @media only screen and (max-width: 450px) {
-    font-size: 10px;
+    font-size: 12px;
   }
 `;
 
