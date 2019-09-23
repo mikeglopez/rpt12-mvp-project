@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import List from './components/List.jsx';
 import MapContainer from './components/MapContainer.jsx';
 import Address from './components/Address.jsx';
+import MobileChoice from './components/MobileChoice.jsx';
 
 const Wrapper = styled.div`
   color: #333333;
@@ -83,12 +84,6 @@ const Outputs = styled.div`
   }
 `;
 
-const Map = styled.div`
-  @media only screen and (max-width: 975px) {
-    display: none;
-  }
-`;
-
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -98,13 +93,21 @@ class App extends React.Component {
         longitude: -87.649
       },
       address: '',
-      restaurants: []
+      restaurants: [],
+      width: 976,
+      displayMap: false
     };
 
     this.getLocation = this.getLocation.bind(this);
     this.getAddress = this.getAddress.bind(this);
     this.search = this.search.bind(this);
     this.geocode = this.getGeocode.bind(this);
+    this.handleResize = this.handleResize.bind(this);
+    this.toggleMap = this.toggleMap.bind(this);
+  }
+
+  componentDidMount() {
+    this.handleResize();
   }
 
   getLocation() {
@@ -168,6 +171,20 @@ class App extends React.Component {
     });
   }
 
+  handleResize() {
+    window.addEventListener('resize', this.handleResize);
+
+    this.setState({
+      width: window.innerWidth,
+    });
+  }
+
+  toggleMap() {
+    this.setState(prevState => ({
+      displayMap: !prevState.displayMap
+    }));
+  }
+
   render() {
     return (
       <Wrapper>
@@ -180,14 +197,11 @@ class App extends React.Component {
             <Address onClick={this.getAddress} />
           </Input>
         </Inputs>
+        <MobileChoice width={this.state.width} displayMap={this.state.displayMap} toggle={this.toggleMap} />
         <br />
         <Outputs>
-          <div>
-            <List address={this.state.address} location={this.state.location} restaurants={this.state.restaurants} />
-          </div>
-          <Map>
-            <MapContainer location={this.state.location} restaurants={this.state.restaurants} />
-          </Map>
+          <List address={this.state.address} displayMap={this.state.displayMap} location={this.state.location} restaurants={this.state.restaurants} width={this.state.width} />
+          <MapContainer displayMap={this.state.displayMap} location={this.state.location} restaurants={this.state.restaurants} width={this.state.width} />
         </Outputs>
       </Wrapper>
     );
