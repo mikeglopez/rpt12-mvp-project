@@ -9,7 +9,8 @@ import Address from './components/Address.jsx';
 const Wrapper = styled.div`
   color: #333333;
   font-family: Verdana, Arial, sans-serif;
-  max-width: 100%;
+  max-width: 90%;
+  margin: auto;
 
   a:link, a:visited {
     color: #333333;
@@ -61,36 +62,29 @@ const Input = styled.div`
 `;
 
 const Outputs = styled.div`
-  min-width: max-content;
+  display: flex;
+  justify-content: center;
+  min-width: 90%;
+  position: relative;
   text-align: center;
-  margin: auto;
 
-  &::after {
-    content: "";
-    display: table;
-    clear: both;
+  > div {
+    padding: 30px;
+  }
+
+  @media only screen and (max-width: 1175px) {
+    > div {
+      padding: 10px;
+    }
   }
 
   @media only screen and (max-width: 450px) {
-    font-size: 10px;
+    font-size: 12px;
   }
 `;
 
-const Left = styled.div`
-  float: left;
-  min-width: fit-content;
-  width: 60%;
-
-  @media only screen and (max-width: 900px) {
-    width: 100%;
-  }
-`;
-
-const Right = styled.div`
-  float: right;
-  width: 40%;
-
-  @media only screen and (max-width: 900px) {
+const Map = styled.div`
+  @media only screen and (max-width: 975px) {
     display: none;
   }
 `;
@@ -114,20 +108,20 @@ class App extends React.Component {
   }
 
   getLocation() {
-    $.ajax({
-      method: 'POST',
-      url: '/geolocation',
-      success: (data) => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition((position) => {
         this.setState({
           address: '',
           location: {
-            latitude: data.lat,
-            longitude: data.lng
+            latitude: position.coords.latitude,
+            longitude: position.coords.longitude
           }
         });
         this.search();
-      }
-    });
+      });
+    } else {
+      alert('Geolocation is not supported by this browser. Please enter an address.');
+    }
   }
 
   getAddress(address) {
@@ -188,12 +182,12 @@ class App extends React.Component {
         </Inputs>
         <br />
         <Outputs>
-          <Left>
+          <div>
             <List address={this.state.address} location={this.state.location} restaurants={this.state.restaurants} />
-          </Left>
-          <Right>
+          </div>
+          <Map>
             <MapContainer location={this.state.location} restaurants={this.state.restaurants} />
-          </Right>
+          </Map>
         </Outputs>
       </Wrapper>
     );

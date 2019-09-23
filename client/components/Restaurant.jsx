@@ -15,9 +15,9 @@ const Picture = styled.img`
   height: 100px;
   width: 100px;
 
-  @media only screen and (max-width: 768px) {
-    height: 60px;
-    width: 60px;
+  @media only screen and (max-width: 450px) {
+    height: 75px;
+    width: 75px;
   }
 `;
 

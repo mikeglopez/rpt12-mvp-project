@@ -5,7 +5,6 @@ import phoneFormatter from 'phone-formatter';
 
 const Wrapper = styled.div`
   padding-left: 10px;
-  max-width: 80%;
 `;
 
 const Title = styled.a`
@@ -18,7 +17,7 @@ const Title = styled.a`
 
 const RestaurantInfo = props => (
   <Wrapper>
-    <Title href={props.restaurant.url}>{props.restaurant.name}</Title>
+    <Title target="_blank" href={props.restaurant.url}>{props.restaurant.name}</Title>
     <StarRatings
       numberOfStars={5}
       rating={props.restaurant.rating}
@@ -29,7 +28,9 @@ const RestaurantInfo = props => (
     <br />
     {props.restaurant.phone ? phoneFormatter.format((phoneFormatter.normalize(props.restaurant.phone)), '(NNN) NNN-NNNN') : ''}
     <br />
-    {props.restaurant.location.address1} {props.restaurant.location.state}, {props.restaurant.location.zip_code}
+    {props.restaurant.location.address1}
+    <br />
+    {props.restaurant.location.city} {props.restaurant.location.state}, {props.restaurant.location.zip_code}
     <br />
     {(props.restaurant.distance / 1609.344).toFixed(2)} miles away
   </Wrapper>

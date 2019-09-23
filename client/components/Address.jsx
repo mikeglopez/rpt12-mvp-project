@@ -24,7 +24,7 @@ class Address extends React.Component {
     return (
       <form>
         <input type="text" placeholder="Or enter your address" value={this.state.address} onChange={this.handleChange} />
-        <input type="button" value="Find Tacos" onClick={this.handleClick} />
+        <button type="button" onClick={this.handleClick}>Find Tacos</button>
       </form>
     );
   }

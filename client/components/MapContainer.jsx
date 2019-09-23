@@ -4,15 +4,15 @@ import GoogleMapReact from 'google-map-react';
 import styled from 'styled-components';
 import phoneFormatter from 'phone-formatter';
 import Marker from './Marker.jsx';
-import token from '../../config.js';
 
 const Wrapper = styled.div`
   height: 400px;
-  width: 100%;
+  width: 500px;
   margin-top: 80px;
 
-@media only screen and (max-width: 1024px) {
+@media only screen and (max-width: 1108px) {
   height: 300px;
+  width: 400px;
 }
 `;
 
@@ -20,7 +20,7 @@ const MapContainer = props => (
   <Wrapper>
     <GoogleMapReact
       bootstrapURLKeys={{
-        key: token,
+        key: 'AIzaSyBhzi5ts3oQefyyUDcBF7x3AfticzDt0MA',
         libraries: ['places', 'directions']
       }}
       defaultZoom={13}
