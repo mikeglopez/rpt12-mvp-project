@@ -9,9 +9,16 @@ const Wrapper = styled.div`
   padding: 10px 0 10px 10px;
 `;
 
+const Link = styled.a`
+  align-items: center;
+  display: flex;
+  justify-content: left;
+`;
+
 const Picture = styled.img`
   border-radius: 4px;
   display: inline-block;
+  flex-shrink: 0;
   height: 100px;
   width: 100px;
 
@@ -28,8 +35,10 @@ const Info = styled.div`
 
 const Restaurant = props => (
   <Wrapper>
-    <a href={props.restaurant.url}><Picture src={props.restaurant.image_url} alt={props.restaurant.name} /></a>
-    <Info><RestaurantInfo restaurant={props.restaurant} /></Info>
+    <Link target="_blank" rel="noreferrer noopener" href={props.restaurant.url}>
+      <Picture src={props.restaurant.image_url} alt={props.restaurant.name} />
+      <Info><RestaurantInfo restaurant={props.restaurant} /></Info>
+    </Link>
   </Wrapper>
 );
 

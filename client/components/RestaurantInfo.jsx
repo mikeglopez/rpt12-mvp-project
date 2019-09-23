@@ -7,7 +7,7 @@ const Wrapper = styled.div`
   padding-left: 10px;
 `;
 
-const Title = styled.a`
+const Title = styled.p`
   display: block;
   font-size: 1.17em;
   font-weight: bolder;
@@ -17,14 +17,14 @@ const Title = styled.a`
 
 const RestaurantInfo = props => (
   <Wrapper>
-    <Title target="_blank" href={props.restaurant.url}>{props.restaurant.name}</Title>
+    <Title>{props.restaurant.name}</Title>
     <StarRatings
       numberOfStars={5}
       rating={props.restaurant.rating}
       starDimension="18px"
       starRatedColor="#990000"
       starSpacing="1px"
-    /> {props.restaurant.review_count} Reviews
+    /> {props.restaurant.review_count} {props.restaurant.review_count > 1 ? 'Reviews' : 'Review'}
     <br />
     {props.restaurant.phone ? phoneFormatter.format((phoneFormatter.normalize(props.restaurant.phone)), '(NNN) NNN-NNNN') : ''}
     <br />
