@@ -47,6 +47,7 @@ const MapContainer = (props) => {
               lat={restaurant.coordinates.latitude}
               lng={restaurant.coordinates.longitude}
               current="false"
+              url={restaurant.url}
             />
           ))}
         </GoogleMapReact>
