@@ -16,39 +16,44 @@ const Wrapper = styled.div`
 }
 `;
 
-const MapContainer = props => (
-  <Wrapper>
-    <GoogleMapReact
-      bootstrapURLKeys={{
-        key: 'AIzaSyBhzi5ts3oQefyyUDcBF7x3AfticzDt0MA',
-        libraries: ['places', 'directions']
-      }}
-      defaultZoom={13}
-      center={[props.location.latitude, props.location.longitude]}
-      yesIWantToUseGoogleMapApiInternals
-    >
-      <Marker
-        key={20}
-        text="Current Location"
-        phone=""
-        address=""
-        lat={props.location.latitude}
-        lng={props.location.longitude}
-        current="true"
-      />
-      {props.restaurants.map((restaurant, id) => (
-        <Marker
-          key={id}
-          text={restaurant.name}
-          phone={restaurant.phone ? phoneFormatter.format((phoneFormatter.normalize(restaurant.phone)), '(NNN) NNN-NNNN') : ''}
-          address={restaurant.location}
-          lat={restaurant.coordinates.latitude}
-          lng={restaurant.coordinates.longitude}
-          current="false"
-        />
-      ))}
-    </GoogleMapReact>
-  </Wrapper>
-);
+const MapContainer = (props) => {
+  if ((props.displayMap && props.width < 976) || props.width > 975) {
+    return (
+      <Wrapper>
+        <GoogleMapReact
+          bootstrapURLKeys={{
+            key: 'AIzaSyBhzi5ts3oQefyyUDcBF7x3AfticzDt0MA',
+            libraries: ['places', 'directions']
+          }}
+          defaultZoom={13}
+          center={[props.location.latitude, props.location.longitude]}
+          yesIWantToUseGoogleMapApiInternals
+        >
+          <Marker
+            key={20}
+            text="Current Location"
+            phone=""
+            address=""
+            lat={props.location.latitude}
+            lng={props.location.longitude}
+            current="true"
+          />
+          {props.restaurants.map((restaurant, id) => (
+            <Marker
+              key={id}
+              text={restaurant.name}
+              phone={restaurant.phone ? phoneFormatter.format((phoneFormatter.normalize(restaurant.phone)), '(NNN) NNN-NNNN') : ''}
+              address={restaurant.location}
+              lat={restaurant.coordinates.latitude}
+              lng={restaurant.coordinates.longitude}
+              current="false"
+            />
+          ))}
+        </GoogleMapReact>
+      </Wrapper>
+    );
+  }
+  return '';
+};
 
 export default MapContainer;

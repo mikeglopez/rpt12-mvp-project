@@ -14,11 +14,16 @@ const Subtitle = styled.h2`
   text-align: center;
 `;
 
-const List = props => (
-  <Wrapper>
-    <Subtitle>Tacos Near {(props.address.length) ? props.address : 'You'}</Subtitle>
-    {props.restaurants.map((restaurant, id) => <Restaurant key={id} restaurant={restaurant} />)}
-  </Wrapper>
-);
+const List = (props) => {
+  if ((!props.displayMap && props.width < 976) || props.width > 975) {
+    return (
+      <Wrapper>
+        <Subtitle>Tacos Near {(props.address.length) ? props.address : 'You'}</Subtitle>
+        {props.restaurants.map((restaurant, id) => <Restaurant key={id} restaurant={restaurant} />)}
+      </Wrapper>
+    );
+  }
+  return '';
+};
 
 export default List;
