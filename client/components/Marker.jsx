@@ -18,7 +18,7 @@ const Wrapper = styled.div`
   }
 `;
 
-const InfoWindow = styled.span`
+const InfoWindow = styled.a`
   background-color: #FFFFFF;
   border-radius: 3px;
   color: #333333;
@@ -39,7 +39,7 @@ const Marker = props => (
     {...props.onClick ? { onClick: props.onClick } : {}}
     current={props.current}
   >
-    <InfoWindow>
+    <InfoWindow target="_blank" rel="noreferrer noopener" href={props.url}>
       {props.text}
       <br />
       {props.phone}
