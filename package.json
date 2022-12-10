@@ -23,7 +23,7 @@
   "homepage": "https://github.com/mikeglopez/rpt12-mvp-project#readme",
   "dependencies": {
     "axios": "^0.19.0",
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "google-map-react": "^1.1.4",
     "jquery": "^3.4.1",
     "phone-formatter": "0.0.2",
